@@ -1,0 +1,15 @@
+name: your_app_name
+description: Flutter project with Firebase backend
+
+dependencies:
+  firebase_core: ^latest_version
+  firebase_auth: ^latest_version # If you need authentication
+  cloud_firestore: ^latest_version # If you need Firestore
+  # Add other Firebase services as needed
+  flutter:
+    sdk: flutter
+  # Add your dependencies here
+
+flutter:
+  assets:
+    # Add your assets here

@@ -75,3 +75,4 @@ This is a Flutter app that uses Firebase for Authentication, Realtime Database, 
 - ios/
 - assets/
 - pubspec.yaml
+- README.md
