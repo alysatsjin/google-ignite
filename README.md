@@ -33,6 +33,12 @@ This is a Flutter app that uses Firebase for Authentication, Realtime Database, 
 
 2. Run the following command to fetch dependencies:
    ```
+   flutter packages get
+   ```
+   ```
+   flutter packages upgrade
+   ```
+   ```
    flutter pub get
    ```
 3. Initialize Firebase in the app's entry point (typically main.dart):
