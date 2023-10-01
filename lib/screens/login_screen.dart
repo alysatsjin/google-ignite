@@ -1,35 +1,68 @@
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 393,
-          height: 852,
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(color: Colors.white),
-          child: Stack(
-            children: [
+    return Scaffold(
+      body: ListView(
+        shrinkWrap: true,
+        children: [
+          Container(
+            width: 393,
+            height: 852,
+            clipBehavior: Clip.antiAlias,
+            decoration: const BoxDecoration(color: Colors.white),
+            child: Stack(children: [
               Positioned(
                 left: 35,
                 top: 597,
-                child: Container(
+                child: SizedBox(
                   width: 327,
                   height: 54,
-                  decoration: ShapeDecoration(
-                    color: Color(0xFFFFB703),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0x3F000000),
-                        blurRadius: 4,
-                        offset: Offset(0, 4),
-                        spreadRadius: 0,
-                      )
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        left: 0,
+                        top: 0,
+                        child: GestureDetector(
+                          onTap: () {
+                            // Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                          },
+                          child: Container(
+                            width: 327,
+                            height: 54,
+                            decoration: ShapeDecoration(
+                              color: const Color(0xFFFFB703),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              shadows: const [
+                                BoxShadow(
+                                  color: Color(0x3F000000),
+                                  blurRadius: 4,
+                                  offset: Offset(0, 4),
+                                  spreadRadius: 0,
+                                ),
+                              ],
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'Continue as Business',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 24,
+                                  fontFamily: 'Manrope',
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.2,
+                                  letterSpacing: -0.53,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -37,56 +70,56 @@ class LoginScreen extends StatelessWidget {
               Positioned(
                 left: 35,
                 top: 680,
-                child: Container(
+                child: SizedBox(
                   width: 327,
                   height: 54,
-                  decoration: ShapeDecoration(
-                    color: Color(0xFFFFB703),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0x3F000000),
-                        blurRadius: 4,
-                        offset: Offset(0, 4),
-                        spreadRadius: 0,
-                      )
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        left: 0,
+                        top: 0,
+                        child: GestureDetector(
+                          onTap: () {
+                            // Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                          },
+                          child: Container(
+                            width: 327,
+                            height: 54,
+                            decoration: ShapeDecoration(
+                              color: const Color(0xFFFFB703),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              shadows: const [
+                                BoxShadow(
+                                  color: Color(0x3F000000),
+                                  blurRadius: 4,
+                                  offset: Offset(0, 4),
+                                  spreadRadius: 0,
+                                ),
+                              ],
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'Continue as Donees',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 24,
+                                  fontFamily: 'Manrope',
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.2,
+                                  letterSpacing: -0.53,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
-              Positioned(
-                left: 81,
-                top: 606,
-                child: Text(
-                  'Continue as Business',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 24,
-                    fontFamily: 'Manrope',
-                    fontWeight: FontWeight.w500,
-                    height: 0.06,
-                    letterSpacing: -0.53,
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 83,
-                top: 689,
-                child: Text(
-                  'Continue as Donees',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 24,
-                    fontFamily: 'Manrope',
-                    fontWeight: FontWeight.w500,
-                    height: 0.06,
-                    letterSpacing: -0.53,
-                  ),
-                ),
-              ),
-              Positioned(
+              const Positioned(
                 left: 76,
                 top: 763,
                 child: Text.rich(
@@ -124,23 +157,26 @@ class LoginScreen extends StatelessWidget {
                 child: Container(
                   width: 463,
                   height: 280,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage("https://via.placeholder.com/463x280"),
+                  decoration: ShapeDecoration(
+                    image: const DecorationImage(
+                      image: AssetImage('assets/Login_Background.png'),
                       fit: BoxFit.fill,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(60),
                     ),
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 85,
                 top: 138,
-                child: Container(width: 226, height: 148),
+                child: SizedBox(width: 226, height: 148),
               ),
-              Positioned(
+              const Positioned(
                 left: 83,
                 top: 135,
-                child: Container(width: 219, height: 144),
+                child: SizedBox(width: 219, height: 144),
               ),
               Positioned(
                 left: 90,
@@ -148,18 +184,21 @@ class LoginScreen extends StatelessWidget {
                 child: Container(
                   width: 219,
                   height: 132,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage("https://via.placeholder.com/219x132"),
+                  decoration: ShapeDecoration(
+                    image: const DecorationImage(
+                      image: AssetImage('assets/Login_Logo.png'),
                       fit: BoxFit.fill,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(60),
                     ),
                   ),
                 ),
               ),
-            ],
+            ]),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

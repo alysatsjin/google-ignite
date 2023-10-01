@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:project/screens/login_screen.dart';
 
 class LaunchScreen extends StatelessWidget {
+  const LaunchScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,18 +16,18 @@ class LaunchScreen extends StatelessWidget {
               width: 393,
               height: 852,
               clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(color: Colors.white),
+              decoration: const BoxDecoration(color: Colors.white),
               child: Stack(
                 children: [
-                  Positioned(
+                  const Positioned(
                     left: 27,
                     top: 315,
-                    child: Container(width: 338, height: 222),
+                    child: SizedBox(width: 338, height: 222),
                   ),
                   Positioned(
                     left: 49,
                     top: 301,
-                    child: Container(
+                    child: SizedBox(
                       width: 295,
                       height: 178,
                       child: Stack(
@@ -52,15 +54,15 @@ class LaunchScreen extends StatelessWidget {
                                 // Navigate to the desired page when the logo is tapped
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => LoginScreen()), // Replace NextPage with the actual destination page
+                                  MaterialPageRoute(builder: (context) => const LoginScreen()), // Replace NextPage with the actual destination page
                                 );
                               },
                               child: Container(
                                 width: 295,
                                 height: 178,
                                 decoration: ShapeDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage('assets/Logo.png'),
+                                  image: const DecorationImage(
+                                    image: AssetImage('assets/Launch_Logo.png'),
                                     fit: BoxFit.fill,
                                   ),
                                   shape: RoundedRectangleBorder(
