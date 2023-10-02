@@ -1,4 +1,4 @@
-# google-ignite
+# Food Match by Flutterflies (G1-T4)
 
 This is a Flutter app that uses Firebase for Authentication, Realtime Database, Firestore, Cloud Storage, making up the backend.
 
@@ -82,3 +82,16 @@ This is a Flutter app that uses Firebase for Authentication, Realtime Database, 
 - assets/
 - pubspec.yaml
 - README.md
+
+
+## Backend
+- Developed using Python (Flask, SQLAlchemy)
+- How to run the Flask API?
+1. Start WAMP From google-ignite-grp-4\backend, import into the database:
+   ```
+   backend/listings.sql
+   ```
+2. Start Flask App in the terminal
+   ```
+   python listings.py
+   ```
