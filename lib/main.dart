@@ -2,8 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:project/screens/launch_screen.dart';
 import 'package:project/screens/login_screen.dart';
 import 'package:project/screens/listingsB_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() => runApp(const MyApp());
+// ...
+
+void main() async{
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp());
+} 
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -22,4 +31,6 @@ class MyApp extends StatelessWidget {
           '/listingsB': (context) => const ListingsBScreen(),
         });
   }
+  
 }
+
