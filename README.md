@@ -27,7 +27,9 @@ A food sharing and donation application to tackle UN's Sustainable Development G
 ## Frontend
 1. Run and Debug Flutter App
 
-### Running Application
+
+## Running Application
+
 1. MySQL Database
 
 ![image](https://github.com/alysatsjin/google-ignite-grp-4/assets/93022626/b25bfe22-5054-4d56-90b7-be0fce9c23b6)
