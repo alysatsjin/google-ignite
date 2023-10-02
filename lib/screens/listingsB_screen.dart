@@ -211,107 +211,128 @@ class _MyAppState extends State<ListingsBScreen> {
     );
   }
 
-  Widget _buildOverlayForm(BuildContext context) {
-    final itemNameController = TextEditingController();
-    final quantityController = TextEditingController();
-    final supplierController = TextEditingController();
-    final listingDateController = TextEditingController();
+ Widget _buildOverlayForm(BuildContext context) {
+  final itemNameController = TextEditingController();
+  final quantityController = TextEditingController();
+  final supplierController = TextEditingController();
+  final listingDateController = TextEditingController();
 
-    void _addItem() async {
-      final itemName = itemNameController.text;
-      final quantity = int.tryParse(quantityController.text) ?? 0;
-      final supplier = supplierController.text;
-      final listingDate = listingDateController.text;
+  void _addItem() async {
+    final itemName = itemNameController.text;
+    final quantity = int.tryParse(quantityController.text) ?? 0;
+    final supplier = supplierController.text;
+    final listingDate = listingDateController.text;
 
-      if (itemName.isNotEmpty &&
-          quantity.toString().isNotEmpty &&
-          supplier.isNotEmpty &&
-          listingDate.isNotEmpty) {
-        final Map<String, dynamic> requestData = {
-          'name': itemName,
-          'quantity': quantity,
-          'supplier': supplier,
-          'listingDate': listingDate,
-        };
+    if (itemName.isNotEmpty &&
+        quantity.toString().isNotEmpty &&
+        supplier.isNotEmpty &&
+        listingDate.isNotEmpty) {
+      final Map<String, dynamic> requestData = {
+        'name': itemName,
+        'quantity': quantity,
+        'supplier': supplier,
+        'listingDate': listingDate,
+      };
 
-        final response = await http.post(
-          Uri.parse('http://127.0.0.1:5000/listing'),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(requestData),
-        );
+      final response = await http.post(
+        Uri.parse('http://127.0.0.1:5000/listing'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(requestData),
+      );
 
-        if (response.statusCode == 201) {
-          toggleFormVisibility();
-          fetchListings().then((fetchedListings) {
-            setState(() {
-              listings = fetchedListings;
-            });
-          }).catchError((error) {
-            print('Error fetching listings: $error');
+      if (response.statusCode == 201) {
+        toggleFormVisibility();
+        fetchListings().then((fetchedListings) {
+          setState(() {
+            listings = fetchedListings;
           });
-        } else {
-          print('Failed to add item: ${response.statusCode}');
-        }
+        }).catchError((error) {
+          print('Error fetching listings: $error');
+        });
+      } else {
+        print('Failed to add item: ${response.statusCode}');
       }
     }
+  }
 
-    return GestureDetector(
-      onTap: () {
-        toggleFormVisibility();
-      },
-      child: Container(
-        color: Colors.black.withOpacity(0.5),
-        child: Center(
-          child: Card(
-            margin: EdgeInsets.all(20),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.close),
-                        onPressed: () {
-                          toggleFormVisibility();
-                        },
-                      ),
-                    ],
+  return GestureDetector(
+    onTap: () {
+      toggleFormVisibility();
+    },
+    child: Container(
+      color: Colors.black.withOpacity(0.5),
+      child: Center(
+        child: Card(
+          margin: EdgeInsets.all(20),
+          elevation: 8, // Add elevation for a raised effect
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0), // Add rounded corners
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.close),
+                      onPressed: () {
+                        toggleFormVisibility();
+                      },
+                    ),
+                  ],
+                ),
+                // Add an image at the top of the card
+                Image.asset(
+                  'assets/graphics/MainGraphic.png', // Replace with your food image asset path
+                  height: 120,
+                  width: 120,
+                  fit: BoxFit.cover,
+                ),
+                SizedBox(height: 16), // Add spacing
+                Text(
+                  'Create Listing',
+                  style: TextStyle(fontSize: 20),
+                ),
+                TextFormField(
+                  controller: itemNameController,
+                  decoration: InputDecoration(labelText: 'Listing Title'),
+                ),
+                TextFormField(
+                  controller: quantityController,
+                  decoration: InputDecoration(labelText: 'Quantity'),
+                ),
+                TextFormField(
+                  controller: supplierController,
+                  decoration: InputDecoration(labelText: 'Provider'),
+                ),
+                TextFormField(
+                  controller: listingDateController,
+                  decoration: InputDecoration(labelText: 'Date'),
+                ),
+                TextFormField(
+                  decoration: InputDecoration(labelText: 'Description'),
+                ),
+                SizedBox(height: 16), // Add spacing
+                ElevatedButton(
+                  onPressed: _addItem,
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.orange, // Set the background color to orange
+                    padding: EdgeInsets.symmetric(horizontal: 70), // Add horizontal padding to make it longer
                   ),
-                  Text(
-                    'Add Item',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  TextFormField(
-                    controller: itemNameController,
-                    decoration: InputDecoration(labelText: 'Item Name'),
-                  ),
-                  TextFormField(
-                    controller: quantityController,
-                    decoration: InputDecoration(labelText: 'Quantity'),
-                  ),
-                  TextFormField(
-                    controller: supplierController,
-                    decoration: InputDecoration(labelText: 'Supplier'),
-                  ),
-                  TextFormField(
-                    controller: listingDateController,
-                    decoration: InputDecoration(labelText: 'Date'),
-                  ),
-                  ElevatedButton(
-                    onPressed: _addItem,
-                    child: Text('Add'),
-                  ),
-                ],
-              ),
+                  child: Text('List It', style: TextStyle(color: Colors.black)),
+                ),
+              ],
             ),
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
 }
