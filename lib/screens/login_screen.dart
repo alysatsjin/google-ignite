@@ -92,11 +92,11 @@ class LoginScreen extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image(image: AssetImage('assets/logos/google.png'), height: 80),
+            Image(image: AssetImage('assets/logos/google.png'), height: 70),
             SizedBox(
               width: 20,
             ),
-            Image(image: AssetImage('assets/logos/facebook.png'), height: 80)
+            Image(image: AssetImage('assets/logos/facebook.png'), height: 70)
           ],
         )
       ],
