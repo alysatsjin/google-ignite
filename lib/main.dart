@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project/screens/launch_screen.dart';
 import 'package:project/screens/login_screen.dart';
 import 'package:project/screens/listingsB_screen.dart';
+import 'package:project/screens/listingsC_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
           '/launch': (context) => const LaunchScreen(),
           '/login': (context) => LoginScreen(),
           '/listingsB': (context) => const ListingsBScreen(),
+          '/listingsC': (context) => const ListingsCScreen(),
         });
   }
 }
