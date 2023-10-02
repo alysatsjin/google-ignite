@@ -1,204 +1,161 @@
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
 
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  void signUserIn() {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        shrinkWrap: true,
-        children: [
-          Container(
-            width: 393,
-            height: 852,
-            clipBehavior: Clip.antiAlias,
-            decoration: const BoxDecoration(color: Colors.white),
-            child: Stack(children: [
-              Positioned(
-                left: 35,
-                top: 597,
-                child: SizedBox(
-                  width: 327,
-                  height: 54,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 0,
-                        top: 0,
-                        child: GestureDetector(
-                          onTap: () {
-                            // Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-                          },
-                          child: Container(
-                            width: 327,
-                            height: 54,
-                            decoration: ShapeDecoration(
-                              color: const Color(0xFFFFB703),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              shadows: const [
-                                BoxShadow(
-                                  color: Color(0x3F000000),
-                                  blurRadius: 4,
-                                  offset: Offset(0, 4),
-                                  spreadRadius: 0,
-                                ),
-                              ],
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Continue as Business',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 24,
-                                  fontFamily: 'Manrope',
-                                  fontWeight: FontWeight.w500,
-                                  height: 1.2,
-                                  letterSpacing: -0.53,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 35,
-                top: 680,
-                child: SizedBox(
-                  width: 327,
-                  height: 54,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 0,
-                        top: 0,
-                        child: GestureDetector(
-                          onTap: () {
-                            // Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-                          },
-                          child: Container(
-                            width: 327,
-                            height: 54,
-                            decoration: ShapeDecoration(
-                              color: const Color(0xFFFFB703),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              shadows: const [
-                                BoxShadow(
-                                  color: Color(0x3F000000),
-                                  blurRadius: 4,
-                                  offset: Offset(0, 4),
-                                  spreadRadius: 0,
-                                ),
-                              ],
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Continue as Donees',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 24,
-                                  fontFamily: 'Manrope',
-                                  fontWeight: FontWeight.w500,
-                                  height: 1.2,
-                                  letterSpacing: -0.53,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const Positioned(
-                left: 76,
-                top: 763,
-                child: Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Didn’t have an account?  ',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontFamily: 'Manrope',
-                          fontWeight: FontWeight.w500,
-                          height: 0.09,
-                          letterSpacing: -0.35,
-                        ),
-                      ),
-                      TextSpan(
-                        text: 'Sign Up',
-                        style: TextStyle(
-                          color: Color(0xFFFB8500),
-                          fontSize: 16,
-                          fontFamily: 'Manrope',
-                          fontWeight: FontWeight.w800,
-                          height: 0.09,
-                          letterSpacing: -0.35,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: -35,
-                top: 279,
-                child: Container(
-                  width: 463,
-                  height: 280,
-                  decoration: ShapeDecoration(
-                    image: const DecorationImage(
-                      image: AssetImage('assets/Login_Background.png'),
-                      fit: BoxFit.fill,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(60),
-                    ),
-                  ),
-                ),
-              ),
-              const Positioned(
-                left: 85,
-                top: 138,
-                child: SizedBox(width: 226, height: 148),
-              ),
-              const Positioned(
-                left: 83,
-                top: 135,
-                child: SizedBox(width: 219, height: 144),
-              ),
-              Positioned(
-                left: 90,
-                top: 154,
-                child: Container(
-                  width: 219,
-                  height: 132,
-                  decoration: ShapeDecoration(
-                    image: const DecorationImage(
-                      image: AssetImage('assets/Login_Logo.png'),
-                      fit: BoxFit.fill,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(60),
-                    ),
-                  ),
-                ),
-              ),
-            ]),
+        body: Column(
+      children: [
+        SizedBox(height: 50),
+        Image(image: AssetImage('assets/logos/YellowLogo.png'), height: 150),
+        SizedBox(height: 20),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                'Welcome Back',
+                style: TextStyle(fontSize: 25),
+              )
+            ],
           ),
-        ],
+        ),
+        SizedBox(height: 10),
+        MyTextField(
+          controller: usernameController,
+          hintText: 'Username',
+          obscureText: false,
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        MyTextField(
+          controller: passwordController,
+          hintText: 'Password',
+          obscureText: true,
+        ),
+        SizedBox(
+          height: 10.0,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                'Forgot Password?',
+              )
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        MyButton(onTap: signUserIn),
+        SizedBox(height: 10),
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text(
+                'Didn\'t have an account? ',
+                style: TextStyle(),
+              ),
+              Text(
+                'Sign Up',
+                style: TextStyle(
+                    color: Colors.orange, fontWeight: FontWeight.bold),
+              ),
+            ])),
+        SizedBox(height: 30),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 25.0),
+          child: Row(
+            children: [
+              Expanded(
+                  child: Divider(thickness: 0.5, color: Colors.grey.shade400)),
+              Text('Or continue with'),
+              Expanded(
+                  child: Divider(thickness: 0.5, color: Colors.grey.shade400))
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image(image: AssetImage('assets/logos/google.png'), height: 80),
+            SizedBox(
+              width: 20,
+            ),
+            Image(image: AssetImage('assets/logos/facebook.png'), height: 80)
+          ],
+        )
+      ],
+    ));
+  }
+}
+
+class MyTextField extends StatelessWidget {
+  final controller;
+  final String hintText;
+  final bool obscureText;
+
+  const MyTextField({
+    super.key,
+    required this.controller,
+    required this.hintText,
+    required this.obscureText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+      child: TextField(
+        controller: controller,
+        obscureText: obscureText,
+        decoration: InputDecoration(
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey.shade200)),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey.shade700)),
+          fillColor: Colors.grey.shade200,
+          filled: true,
+          hintText: hintText,
+        ),
       ),
+    );
+  }
+}
+
+class MyButton extends StatelessWidget {
+  const MyButton({super.key, required this.onTap});
+  final Function()? onTap;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+          padding: const EdgeInsets.all(12),
+          margin: const EdgeInsets.symmetric(horizontal: 25),
+          decoration: BoxDecoration(
+              color: Colors.orange.shade400,
+              borderRadius: BorderRadius.circular(15)),
+          child: const Center(
+              child: Text("Sign In",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                  )))),
     );
   }
 }
