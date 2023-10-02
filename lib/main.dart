@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.orange,
           primaryColor: Colors.orange[700],
         ),
-        initialRoute: '/launch',
+        initialRoute: '/listingsB',
         routes: {
           '/launch': (context) => const LaunchScreen(),
           '/login': (context) => const LoginScreen(),
