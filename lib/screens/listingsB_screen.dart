@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project/screens/login_screen.dart';
 
 void main() => runApp(const ListingsBScreen());
 
@@ -53,15 +55,19 @@ class _MyAppState extends State<ListingsBScreen> {
         items.insert(0, (TodoItem(text: seed[pointer++ % seed.length])));
       });
 
-  void delete(int index) => setState(() { items.removeAt(index); });
+  void delete(int index) => setState(() {
+        items.removeAt(index);
+      });
 
   void check(int index) => setState(() {
         items[index].checked = !items[index].checked;
       });
 
-  void shuffle() => setState(() { items.shuffle(); });
+  void shuffle() => setState(() {
+        items.shuffle();
+      });
 
-  void sort() => setState(() { });
+  void sort() => setState(() {});
 
   bool isFormVisible = false;
 
@@ -79,30 +85,36 @@ class _MyAppState extends State<ListingsBScreen> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           leading: GestureDetector(
-              onTap: () { /* Write listener code here */ },
-              child: const Icon(
-                Icons.menu, color: Colors.orange,
-              ),
+            onTap: () {},
+            child: const Icon(
+              Icons.menu,
+              color: Colors.orange,
+            ),
           ),
           title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                  Image.asset(
-                 'assets/logos/YellowLogo.png',
-                  fit: BoxFit.contain,
-                  height: 32,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Image.asset(
+                'assets/logos/YellowLogo.png',
+                fit: BoxFit.contain,
+                height: 32,
               ),
             ],
           ),
           actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.account_circle_rounded),
-            color: Theme.of(context).primaryColor,
-            onPressed: () {
-            },
-          ),
+            IconButton(
+              icon: const Icon(Icons.account_circle_rounded),
+              color: Theme.of(context).primaryColor,
+              onPressed: () {
+                FirebaseAuth.instance.signOut().then((value) {
+                  print('Signed out');
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                });
+              },
+            ),
           ],
-  ),
+        ),
         body: Stack(
           children: [
             SingleChildScrollView(
@@ -126,8 +138,8 @@ class _MyAppState extends State<ListingsBScreen> {
     return SizedBox(
       width: width,
       height: 70,
-        child: const DecoratedBox(
-          decoration: BoxDecoration(
+      child: const DecoratedBox(
+        decoration: BoxDecoration(
           color: Colors.orange,
         ),
         child: Center(
@@ -139,18 +151,17 @@ class _MyAppState extends State<ListingsBScreen> {
 
   Widget _buildButtonSection(BuildContext context) {
     Color color = Theme.of(context).primaryColor;
-  
+
     return Container(
-      padding: const EdgeInsets.only(top: 20),
-      child: Row(      
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          _buildButtonColumn(color, Icons.filter_list_rounded, 'SORT', sort),
-          _buildButtonColumn(color, Icons.add, 'ADD', toggleFormVisibility),
-          // _buildButtonColumn(color, Icons.shuffle, 'SHUFFLE', shuffle),
-        ],
-      )
-    );
+        padding: const EdgeInsets.only(top: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            _buildButtonColumn(color, Icons.filter_list_rounded, 'SORT', sort),
+            _buildButtonColumn(color, Icons.add, 'ADD', toggleFormVisibility),
+            // _buildButtonColumn(color, Icons.shuffle, 'SHUFFLE', shuffle),
+          ],
+        ));
   }
 
   Widget _buildButtonColumn(
@@ -197,102 +208,103 @@ class _MyAppState extends State<ListingsBScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       child: ListTile(
-         title: Text(text[0]),
-         subtitle: Text('${text[2]}\nQuantity: ${text[1]}'),
+        title: Text(text[0]),
+        subtitle: Text('${text[2]}\nQuantity: ${text[1]}'),
         trailing: Text(text[3]),
       ),
     );
   }
 
-Widget _buildOverlayForm(BuildContext context) {
-  final itemNameController = TextEditingController();
-  final quantityController = TextEditingController();
-  final supplierController = TextEditingController();
-  final dateController = TextEditingController();
+  Widget _buildOverlayForm(BuildContext context) {
+    final itemNameController = TextEditingController();
+    final quantityController = TextEditingController();
+    final supplierController = TextEditingController();
+    final dateController = TextEditingController();
 
-  return GestureDetector(
-    onTap: () {
-      // Close the overlay when tapping outside the form
-      toggleFormVisibility();
-    },
-    child: Container(
-      color: Colors.black.withOpacity(0.5),
-      child: Center(
-        child: Card(
-          margin: const EdgeInsets.all(20),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () {
-                        // Close the overlay when the close button is clicked
-                        toggleFormVisibility();
-                      },
-                    ),
-                  ],
-                ),
-                const Text(
-                  'Add Item',
-                  style: TextStyle(fontSize: 20),
-                ),
-                TextFormField(
-                  controller: itemNameController,
-                  decoration: const InputDecoration(labelText: 'Item Name'),
-                ),
-                TextFormField(
-                  controller: quantityController,
-                  decoration: const InputDecoration(labelText: 'Quantity'),
-                ),
-                TextFormField(
-                  controller: supplierController,
-                  decoration: const InputDecoration(labelText: 'Supplier'),
-                ),
-                TextFormField(
-                  controller: dateController,
-                  decoration: const InputDecoration(labelText: 'Date'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Get values from text controllers
-                    final itemName = itemNameController.text;
-                    final quantity = int.tryParse(quantityController.text) ?? 0;
-                    final supplier = supplierController.text;
-                    final date = dateController.text;
+    return GestureDetector(
+      onTap: () {
+        // Close the overlay when tapping outside the form
+        toggleFormVisibility();
+      },
+      child: Container(
+        color: Colors.black.withOpacity(0.5),
+        child: Center(
+          child: Card(
+            margin: const EdgeInsets.all(20),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          // Close the overlay when the close button is clicked
+                          toggleFormVisibility();
+                        },
+                      ),
+                    ],
+                  ),
+                  const Text(
+                    'Add Item',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  TextFormField(
+                    controller: itemNameController,
+                    decoration: const InputDecoration(labelText: 'Item Name'),
+                  ),
+                  TextFormField(
+                    controller: quantityController,
+                    decoration: const InputDecoration(labelText: 'Quantity'),
+                  ),
+                  TextFormField(
+                    controller: supplierController,
+                    decoration: const InputDecoration(labelText: 'Supplier'),
+                  ),
+                  TextFormField(
+                    controller: dateController,
+                    decoration: const InputDecoration(labelText: 'Date'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Get values from text controllers
+                      final itemName = itemNameController.text;
+                      final quantity =
+                          int.tryParse(quantityController.text) ?? 0;
+                      final supplier = supplierController.text;
+                      final date = dateController.text;
 
-                    // Validate the values as needed
+                      // Validate the values as needed
 
-                    // Add the values to seedArray
-                    if (itemName.isNotEmpty &&
-                        quantity.toString().isNotEmpty &&
-                        supplier.isNotEmpty &&
-                        date.isNotEmpty) {
-                      setState(() {
-                        seedArray.insert(0, [itemName, quantity, supplier, date]);
-                        toggleFormVisibility();
-                      });
-                    }
+                      // Add the values to seedArray
+                      if (itemName.isNotEmpty &&
+                          quantity.toString().isNotEmpty &&
+                          supplier.isNotEmpty &&
+                          date.isNotEmpty) {
+                        setState(() {
+                          seedArray
+                              .insert(0, [itemName, quantity, supplier, date]);
+                          toggleFormVisibility();
+                        });
+                      }
 
-                    // Clear the text controllers
-                    itemNameController.clear();
-                    quantityController.clear();
-                    supplierController.clear();
-                    dateController.clear();
-                  },
-                  child: const Text('Add'),
-                ),
-              ],
+                      // Clear the text controllers
+                      itemNameController.clear();
+                      quantityController.clear();
+                      supplierController.clear();
+                      dateController.clear();
+                    },
+                    child: const Text('Add'),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 }

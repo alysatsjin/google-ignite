@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:project/screens/launch_screen.dart';
 import 'package:project/screens/login_screen.dart';
 import 'package:project/screens/listingsB_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:project/screens/register_screen.dart';
 import 'firebase_options.dart';
 
 // ...
@@ -25,10 +25,10 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.orange,
           primaryColor: Colors.orange[700],
         ),
-        initialRoute: '/login',
+        initialRoute: '/register',
         routes: {
-          '/launch': (context) => const LaunchScreen(),
           '/login': (context) => LoginScreen(),
+          '/register': (context) => RegisterScreen(),
           '/listingsB': (context) => const ListingsBScreen(),
         });
   }

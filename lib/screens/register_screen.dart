@@ -1,15 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project/screens/listingsB_screen.dart';
-import 'package:project/screens/register_screen.dart';
+import 'package:project/screens/login_screen.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  RegisterScreen({super.key});
 
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
-
-  void signUserIn() {}
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +23,7 @@ class LoginScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                'Welcome Back',
+                'Create Account',
                 style: TextStyle(fontSize: 25),
               )
             ],
@@ -46,31 +44,21 @@ class LoginScreen extends StatelessWidget {
           obscureText: true,
         ),
         SizedBox(
-          height: 10.0,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                'Forgot Password?',
-              )
-            ],
-          ),
+          height: 20.0,
         ),
         SizedBox(
           height: 20,
         ),
-        MyButton(context, true, () {
+        MyButton(context, false, () {
           FirebaseAuth.instance
-              .signInWithEmailAndPassword(
-            email: usernameController.text,
-            password: passwordController.text,
-          )
+              .createUserWithEmailAndPassword(
+                  email: usernameController.text,
+                  password: passwordController.text)
               .then((value) {
             Navigator.push(context,
                 MaterialPageRoute(builder: ((context) => ListingsBScreen())));
+          }).onError((error, stackTrace) {
+            print('Error ${error.toString()}');
           });
         }),
         SizedBox(height: 10),
@@ -78,47 +66,22 @@ class LoginScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(
-                'Didn\'t have an account? ',
+                'Already have an account? ',
                 style: TextStyle(),
               ),
               GestureDetector(
                 onTap: () {
                   Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => RegisterScreen()));
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
                 },
                 child: Text(
-                  'Sign Up',
+                  'Sign In',
                   style: TextStyle(
                       color: Colors.orange, fontWeight: FontWeight.bold),
                 ),
               ),
             ])),
         SizedBox(height: 30),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.0),
-          child: Row(
-            children: [
-              Expanded(
-                  child: Divider(thickness: 0.5, color: Colors.grey.shade400)),
-              Text('Or continue with'),
-              Expanded(
-                  child: Divider(thickness: 0.5, color: Colors.grey.shade400))
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image(image: AssetImage('assets/logos/google.png'), height: 70),
-            SizedBox(
-              width: 20,
-            ),
-            Image(image: AssetImage('assets/logos/facebook.png'), height: 70)
-          ],
-        )
       ],
     ));
   }
