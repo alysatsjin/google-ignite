@@ -17,8 +17,7 @@ class Listing(db.Model):
     supplier = db.Column(db.String(64), nullable=False)
     listingDate = db.Column(db.String(64), nullable=False)
 
-    def __init__(self, lid, name, quantity, supplier, listingDate):
-        self.lid = lid
+    def __init__(self, name, quantity, supplier, listingDate):
         self.name = name
         self.quantity = quantity
         self.supplier = supplier
