@@ -88,7 +88,7 @@ class _MyAppState extends State<ListingsBScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                   Image.asset(
-                 'assets/Login_Logo.png',
+                 'assets/logos/YellowLogo.png',
                   fit: BoxFit.contain,
                   height: 32,
               ),
@@ -141,7 +141,7 @@ class _MyAppState extends State<ListingsBScreen> {
     Color color = Theme.of(context).primaryColor;
   
     return Container(
-      padding: EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.only(top: 20),
       child: Row(      
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -219,7 +219,7 @@ Widget _buildOverlayForm(BuildContext context) {
       color: Colors.black.withOpacity(0.5),
       child: Center(
         child: Card(
-          margin: EdgeInsets.all(20),
+          margin: const EdgeInsets.all(20),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -229,7 +229,7 @@ Widget _buildOverlayForm(BuildContext context) {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     IconButton(
-                      icon: Icon(Icons.close),
+                      icon: const Icon(Icons.close),
                       onPressed: () {
                         // Close the overlay when the close button is clicked
                         toggleFormVisibility();
@@ -237,25 +237,25 @@ Widget _buildOverlayForm(BuildContext context) {
                     ),
                   ],
                 ),
-                Text(
+                const Text(
                   'Add Item',
                   style: TextStyle(fontSize: 20),
                 ),
                 TextFormField(
                   controller: itemNameController,
-                  decoration: InputDecoration(labelText: 'Item Name'),
+                  decoration: const InputDecoration(labelText: 'Item Name'),
                 ),
                 TextFormField(
                   controller: quantityController,
-                  decoration: InputDecoration(labelText: 'Quantity'),
+                  decoration: const InputDecoration(labelText: 'Quantity'),
                 ),
                 TextFormField(
                   controller: supplierController,
-                  decoration: InputDecoration(labelText: 'Supplier'),
+                  decoration: const InputDecoration(labelText: 'Supplier'),
                 ),
                 TextFormField(
                   controller: dateController,
-                  decoration: InputDecoration(labelText: 'Date'),
+                  decoration: const InputDecoration(labelText: 'Date'),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -284,7 +284,7 @@ Widget _buildOverlayForm(BuildContext context) {
                     supplierController.clear();
                     dateController.clear();
                   },
-                  child: Text('Add'),
+                  child: const Text('Add'),
                 ),
               ],
             ),
