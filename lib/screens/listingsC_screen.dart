@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-void main() => runApp(const ListingsBScreen());
+void main() => runApp(const ListingsCScreen());
 
 class Listing {
   final int lid;
@@ -49,14 +49,14 @@ Future<List<Listing>> fetchListings() async {
   }
 }
 
-class ListingsBScreen extends StatefulWidget {
-  const ListingsBScreen({Key? key}) : super(key: key);
+class ListingsCScreen extends StatefulWidget {
+  const ListingsCScreen({Key? key}) : super(key: key);
 
   @override
-  State<ListingsBScreen> createState() => _MyAppState();
+  State<ListingsCScreen> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<ListingsBScreen> {
+class _MyAppState extends State<ListingsCScreen> {
   List<Listing> listings = [];
 
   @override
@@ -154,7 +154,7 @@ class _MyAppState extends State<ListingsBScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           _buildButtonColumn(color, Icons.filter_list_rounded, 'SORT', () {}),
-          _buildButtonColumn(color, Icons.add, 'ADD', toggleFormVisibility),
+          _buildButtonColumn(color, Icons.add, 'Donate', toggleFormVisibility),
         ],
       ),
     );
@@ -295,12 +295,12 @@ class _MyAppState extends State<ListingsBScreen> {
                 ),
                 SizedBox(height: 16), // Add spacing
                 Text(
-                  'Create Listing',
+                  'Food Donation Details',
                   style: TextStyle(fontSize: 20),
                 ),
                 TextFormField(
                   controller: itemNameController,
-                  decoration: InputDecoration(labelText: 'Listing Title'),
+                  decoration: InputDecoration(labelText: 'Food Item'),
                 ),
                 TextFormField(
                   controller: quantityController,
@@ -319,7 +319,9 @@ class _MyAppState extends State<ListingsBScreen> {
                 ),
                 SizedBox(height: 16), // Add spacing
                 ElevatedButton(
-                  onPressed: _addItem,
+                  onPressed: () {
+                        toggleFormVisibility();
+                      },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.orange, // Set the background color to orange
                     padding: EdgeInsets.symmetric(horizontal: 70), // Add horizontal padding to make it longer
