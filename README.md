@@ -1,7 +1,9 @@
+![YellowLogo](https://github.com/alysatsjin/google-ignite-grp-4/assets/93022626/52a40404-d087-4781-83cd-941a224c68c5)
 # Food Match by Flutterflies (G1-T4)
 ```
 A food sharing and donation application to tackle UN's Sustainable Development Goal 2 - Zero Hunger
 ```
+
 
 ## Installation
 
