@@ -54,7 +54,9 @@ class LaunchScreen extends StatelessWidget {
                                 // Navigate to the desired page when the logo is tapped
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => const LoginScreen()), // Replace NextPage with the actual destination page
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          LoginScreen()), // Replace NextPage with the actual destination page
                                 );
                               },
                               child: Container(
@@ -62,7 +64,8 @@ class LaunchScreen extends StatelessWidget {
                                 height: 178,
                                 decoration: ShapeDecoration(
                                   image: const DecorationImage(
-                                    image: AssetImage('assets/Launch_Logo.png'),
+                                    image: AssetImage(
+                                        'assets/logo/YellowLogo.png'),
                                     fit: BoxFit.fill,
                                   ),
                                   shape: RoundedRectangleBorder(
