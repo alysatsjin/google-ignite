@@ -4,6 +4,7 @@ import 'package:project/screens/listingsB_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:project/screens/register_screen.dart';
 import 'firebase_options.dart';
+import 'package:project/screens/listingsC_screen.dart';
 
 // ...
 
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
           '/login': (context) => LoginScreen(),
           '/register': (context) => RegisterScreen(),
           '/listingsB': (context) => const ListingsBScreen(),
+          '/listingsC': (context) => const ListingsCScreen(),
         });
   }
 }

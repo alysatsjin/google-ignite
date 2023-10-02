@@ -1,10 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project/screens/login_screen.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-void main() => runApp(const ListingsBScreen());
+void main() => runApp(const ListingsCScreen());
 
 class Listing {
   final int lid;
@@ -51,14 +49,14 @@ Future<List<Listing>> fetchListings() async {
   }
 }
 
-class ListingsBScreen extends StatefulWidget {
-  const ListingsBScreen({Key? key}) : super(key: key);
+class ListingsCScreen extends StatefulWidget {
+  const ListingsCScreen({Key? key}) : super(key: key);
 
   @override
-  State<ListingsBScreen> createState() => _MyAppState();
+  State<ListingsCScreen> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<ListingsBScreen> {
+class _MyAppState extends State<ListingsCScreen> {
   List<Listing> listings = [];
 
   @override
@@ -99,7 +97,7 @@ class _MyAppState extends State<ListingsBScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Image.asset(
-                'assets/logos/YellowLogo.png',
+                'assets/Logos/YellowLogo.png',
                 fit: BoxFit.contain,
                 height: 32,
               ),
@@ -109,13 +107,7 @@ class _MyAppState extends State<ListingsBScreen> {
             IconButton(
               icon: const Icon(Icons.account_circle_rounded),
               color: Theme.of(context).primaryColor,
-              onPressed: () {
-                FirebaseAuth.instance.signOut().then((value) {
-                  print('Signed out');
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
-                });
-              },
+              onPressed: () {},
             ),
           ],
         ),
@@ -162,7 +154,7 @@ class _MyAppState extends State<ListingsBScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           _buildButtonColumn(color, Icons.filter_list_rounded, 'SORT', () {}),
-          _buildButtonColumn(color, Icons.add, 'ADD', toggleFormVisibility),
+          _buildButtonColumn(color, Icons.add, 'Donate', toggleFormVisibility),
         ],
       ),
     );
@@ -303,12 +295,12 @@ class _MyAppState extends State<ListingsBScreen> {
                 ),
                 SizedBox(height: 16), // Add spacing
                 Text(
-                  'Create Listing',
+                  'Food Donation Details',
                   style: TextStyle(fontSize: 20),
                 ),
                 TextFormField(
                   controller: itemNameController,
-                  decoration: InputDecoration(labelText: 'Listing Title'),
+                  decoration: InputDecoration(labelText: 'Food Item'),
                 ),
                 TextFormField(
                   controller: quantityController,
@@ -327,7 +319,9 @@ class _MyAppState extends State<ListingsBScreen> {
                 ),
                 SizedBox(height: 16), // Add spacing
                 ElevatedButton(
-                  onPressed: _addItem,
+                  onPressed: () {
+                        toggleFormVisibility();
+                      },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.orange, // Set the background color to orange
                     padding: EdgeInsets.symmetric(horizontal: 70), // Add horizontal padding to make it longer
@@ -339,8 +333,8 @@ class _MyAppState extends State<ListingsBScreen> {
           ),
         ),
       ),
-    ));
-  }
+    ),
+  );
 }
 
-
+}
