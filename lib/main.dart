@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/screens/launch_screen.dart';
 import 'package:project/screens/login_screen.dart';
+import 'package:project/screens/listingsB_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/launch': (context) => const LaunchScreen(),
           '/login': (context) => const LoginScreen(),
+          '/listingsB': (context) => const ListingsBScreen(),
         });
   }
 }
