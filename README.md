@@ -18,7 +18,7 @@ A food sharing and donation application to tackle UN's Sustainable Development G
    flutter pub get
    ```
 ## Backend
-- Developed using Python (Flask, SQLAlchemy)
+- Developed using Python (Flask, SQLAlchemy) and Firebase (Authentication)
 - How to run the Flask API?
 1. Start WAMP From google-ignite-grp-4\backend, import into the database:
    ```
@@ -28,6 +28,14 @@ A food sharing and donation application to tackle UN's Sustainable Development G
    ```
    python listings.py
    ```
+3. Ensure dependencies are updated
+   ```
+   flutter pub get
+   ```
+4. Run and debug flutter app on Chrome
+   
+   ![image](https://github.com/alysatsjin/google-ignite-grp-4/assets/93022626/9adc9b99-ae8a-400f-8294-1db06ea894ff)
+
 ## Frontend
 1. Run and Debug Flutter App
 
