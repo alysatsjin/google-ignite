@@ -13,6 +13,10 @@ A food sharing and donation application to tackle UN's Sustainable Development G
    git clone https://github.com/alysatsjin/google-ignite-grp-4.git
    cd google-ignite-grp-4
    ```
+2. Install dependencies
+   ```
+   flutter pub get
+   ```
 ## Backend
 - Developed using Python (Flask, SQLAlchemy)
 - How to run the Flask API?
