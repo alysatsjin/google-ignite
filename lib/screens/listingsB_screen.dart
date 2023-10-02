@@ -1,67 +1,75 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 void main() => runApp(const ListingsBScreen());
 
-class TodoItem {
-  String text = '';
-  bool checked = false;
+class Listing {
+  final int lid;
+  final String name;
+  final int quantity;
+  final String supplier;
+  final String date;
 
-  TodoItem({required this.text});
+  Listing({
+    required this.lid,
+    required this.name,
+    required this.quantity,
+    required this.supplier,
+    required this.date,
+  });
+
+  factory Listing.fromJson(Map<String, dynamic> json) {
+    return Listing(
+      lid: json['lid'] as int,
+      name: json['name'] as String,
+      quantity: json['quantity'] as int,
+      supplier: json['supplier'] as String,
+      date: json['date'] as String,
+    );
+  }
 }
 
-const headerImageRatio = 2;
-const headerImageHeightS = 240.0;
-const headerImageHeightM = 320.0;
-const seed = [
-  'Bento Sets',
-  'Bread and Confectionary',
-  'Canned Food',
-  'Pastry and Desserts',
-  'Mixed Rice (Packed)',
-  'Mixed Rice (Packed)',
-  'Canned Food',
-  'Pastry and Desserts',
-  'Snacks (Packed)',
-  'Pastry and Desserts',
-];
+Future<List<Listing>> fetchListings() async {
+  final response = await http.get(Uri.parse('http://127.0.0.1:5000/listing'));
 
-List<List<dynamic>> seedArray = [
-  ['Bento Sets', 20, 'Stamford Catering', '2/10/23'],
-  ['Bread and Confectionary', 100, 'Mother Dough', '2/10/23'],
-  ['Canned Food', 50, 'Father Food', '4/10/23'],
-  ['Pastry and Desserts', 40, 'Konditori', '1/10/23'],
-  ['Mixed Rice (Packed)', 20, 'Leong Yeow Rice', '1/10/23'],
-  ['Mixed Rice (Packed)', 20, 'Lee"s Rice', '1/10/23'],
-  ['Canned Food', 25, 'Canny Food', '1/10/23'],
-  ['Pastry and Desserts', 15, 'The French American Bakery', '29/2/2024'],
-  ['Mixed Rice (Packed)', 20, 'Lee"s Rice', '1/10/23'],
-  ['Bread and Confectionary', 100, 'Mother Dough', '2/10/23']
-];
+  if (response.statusCode == 200) {
+    final jsonBody = jsonDecode(response.body);
+
+    if (jsonBody.containsKey("data")) {
+      final data = jsonBody["data"]["listing"] as List<dynamic>;
+      final listings = data.map((item) => Listing.fromJson(item)).toList();
+      return listings;
+    } else {
+      throw Exception('Malformed API response: Missing "data" key');
+    }
+  } else {
+    print('Failed to fetch data: ${response.statusCode}');
+    throw Exception('Failed to load listings');
+  }
+}
 
 class ListingsBScreen extends StatefulWidget {
-  const ListingsBScreen({super.key});
+  const ListingsBScreen({Key? key}) : super(key: key);
 
   @override
   State<ListingsBScreen> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<ListingsBScreen> {
-  int pointer = 0;
-  List<TodoItem> items = [];
+  List<Listing> listings = [];
 
-  void add() => setState(() {
-        items.insert(0, (TodoItem(text: seed[pointer++ % seed.length])));
+  @override
+  void initState() {
+    super.initState();
+    fetchListings().then((fetchedListings) {
+      setState(() {
+        listings = fetchedListings;
       });
-
-  void delete(int index) => setState(() { items.removeAt(index); });
-
-  void check(int index) => setState(() {
-        items[index].checked = !items[index].checked;
-      });
-
-  void shuffle() => setState(() { items.shuffle(); });
-
-  void sort() => setState(() { });
+    }).catchError((error) {
+      print('Error fetching listings: $error');
+    });
+  }
 
   bool isFormVisible = false;
 
@@ -79,30 +87,30 @@ class _MyAppState extends State<ListingsBScreen> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           leading: GestureDetector(
-              onTap: () { /* Write listener code here */ },
-              child: const Icon(
-                Icons.menu, color: Colors.orange,
-              ),
+            onTap: () {},
+            child: const Icon(
+              Icons.menu,
+              color: Colors.orange,
+            ),
           ),
           title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                  Image.asset(
-                 'assets/logos/YellowLogo.png',
-                  fit: BoxFit.contain,
-                  height: 32,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Image.asset(
+                'assets/Logos/YellowLogo.png',
+                fit: BoxFit.contain,
+                height: 32,
               ),
             ],
           ),
           actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.account_circle_rounded),
-            color: Theme.of(context).primaryColor,
-            onPressed: () {
-            },
-          ),
+            IconButton(
+              icon: const Icon(Icons.account_circle_rounded),
+              color: Theme.of(context).primaryColor,
+              onPressed: () {},
+            ),
           ],
-  ),
+        ),
         body: Stack(
           children: [
             SingleChildScrollView(
@@ -126,8 +134,8 @@ class _MyAppState extends State<ListingsBScreen> {
     return SizedBox(
       width: width,
       height: 70,
-        child: const DecoratedBox(
-          decoration: BoxDecoration(
+      child: const DecoratedBox(
+        decoration: BoxDecoration(
           color: Colors.orange,
         ),
         child: Center(
@@ -139,17 +147,16 @@ class _MyAppState extends State<ListingsBScreen> {
 
   Widget _buildButtonSection(BuildContext context) {
     Color color = Theme.of(context).primaryColor;
-  
+
     return Container(
-      padding: const EdgeInsets.only(top: 20),
-      child: Row(      
+      padding: EdgeInsets.only(top: 20),
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildButtonColumn(color, Icons.filter_list_rounded, 'SORT', sort),
+          _buildButtonColumn(color, Icons.filter_list_rounded, 'SORT', () {}),
           _buildButtonColumn(color, Icons.add, 'ADD', toggleFormVisibility),
-          // _buildButtonColumn(color, Icons.shuffle, 'SHUFFLE', shuffle),
         ],
-      )
+      ),
     );
   }
 
@@ -184,8 +191,8 @@ class _MyAppState extends State<ListingsBScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const Divider(),
-          for (int i = 0; i < seedArray.length; i++) ...[
-            _buildListItem(context, seedArray[i]),
+          for (final listing in listings) ...[
+            _buildListItem(context, listing),
             const Divider(),
           ],
         ],
@@ -193,106 +200,118 @@ class _MyAppState extends State<ListingsBScreen> {
     );
   }
 
-  Widget _buildListItem(BuildContext context, List text) {
+  Widget _buildListItem(BuildContext context, Listing listing) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       child: ListTile(
-         title: Text(text[0]),
-         subtitle: Text('${text[2]}\nQuantity: ${text[1]}'),
-        trailing: Text(text[3]),
+        title: Text(listing.name),
+        subtitle: Text('${listing.supplier}\nQuantity: ${listing.quantity}'),
+        trailing: Text(listing.date),
       ),
     );
   }
 
-Widget _buildOverlayForm(BuildContext context) {
-  final itemNameController = TextEditingController();
-  final quantityController = TextEditingController();
-  final supplierController = TextEditingController();
-  final dateController = TextEditingController();
+  Widget _buildOverlayForm(BuildContext context) {
+    final itemNameController = TextEditingController();
+    final quantityController = TextEditingController();
+    final supplierController = TextEditingController();
+    final listingDateController = TextEditingController();
 
-  return GestureDetector(
-    onTap: () {
-      // Close the overlay when tapping outside the form
-      toggleFormVisibility();
-    },
-    child: Container(
-      color: Colors.black.withOpacity(0.5),
-      child: Center(
-        child: Card(
-          margin: const EdgeInsets.all(20),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () {
-                        // Close the overlay when the close button is clicked
-                        toggleFormVisibility();
-                      },
-                    ),
-                  ],
-                ),
-                const Text(
-                  'Add Item',
-                  style: TextStyle(fontSize: 20),
-                ),
-                TextFormField(
-                  controller: itemNameController,
-                  decoration: const InputDecoration(labelText: 'Item Name'),
-                ),
-                TextFormField(
-                  controller: quantityController,
-                  decoration: const InputDecoration(labelText: 'Quantity'),
-                ),
-                TextFormField(
-                  controller: supplierController,
-                  decoration: const InputDecoration(labelText: 'Supplier'),
-                ),
-                TextFormField(
-                  controller: dateController,
-                  decoration: const InputDecoration(labelText: 'Date'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Get values from text controllers
-                    final itemName = itemNameController.text;
-                    final quantity = int.tryParse(quantityController.text) ?? 0;
-                    final supplier = supplierController.text;
-                    final date = dateController.text;
+    void _addItem() async {
+      final itemName = itemNameController.text;
+      final quantity = int.tryParse(quantityController.text) ?? 0;
+      final supplier = supplierController.text;
+      final listingDate = listingDateController.text;
 
-                    // Validate the values as needed
+      if (itemName.isNotEmpty &&
+          quantity.toString().isNotEmpty &&
+          supplier.isNotEmpty &&
+          listingDate.isNotEmpty) {
+        final Map<String, dynamic> requestData = {
+          'name': itemName,
+          'quantity': quantity,
+          'supplier': supplier,
+          'listingDate': listingDate,
+        };
 
-                    // Add the values to seedArray
-                    if (itemName.isNotEmpty &&
-                        quantity.toString().isNotEmpty &&
-                        supplier.isNotEmpty &&
-                        date.isNotEmpty) {
-                      setState(() {
-                        seedArray.insert(0, [itemName, quantity, supplier, date]);
-                        toggleFormVisibility();
-                      });
-                    }
+        final response = await http.post(
+          Uri.parse('http://127.0.0.1:5000/listing'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(requestData),
+        );
 
-                    // Clear the text controllers
-                    itemNameController.clear();
-                    quantityController.clear();
-                    supplierController.clear();
-                    dateController.clear();
-                  },
-                  child: const Text('Add'),
-                ),
-              ],
+        if (response.statusCode == 201) {
+          toggleFormVisibility();
+          fetchListings().then((fetchedListings) {
+            setState(() {
+              listings = fetchedListings;
+            });
+          }).catchError((error) {
+            print('Error fetching listings: $error');
+          });
+        } else {
+          print('Failed to add item: ${response.statusCode}');
+        }
+      }
+    }
+
+    return GestureDetector(
+      onTap: () {
+        toggleFormVisibility();
+      },
+      child: Container(
+        color: Colors.black.withOpacity(0.5),
+        child: Center(
+          child: Card(
+            margin: EdgeInsets.all(20),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: () {
+                          toggleFormVisibility();
+                        },
+                      ),
+                    ],
+                  ),
+                  Text(
+                    'Add Item',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  TextFormField(
+                    controller: itemNameController,
+                    decoration: InputDecoration(labelText: 'Item Name'),
+                  ),
+                  TextFormField(
+                    controller: quantityController,
+                    decoration: InputDecoration(labelText: 'Quantity'),
+                  ),
+                  TextFormField(
+                    controller: supplierController,
+                    decoration: InputDecoration(labelText: 'Supplier'),
+                  ),
+                  TextFormField(
+                    controller: listingDateController,
+                    decoration: InputDecoration(labelText: 'Date'),
+                  ),
+                  ElevatedButton(
+                    onPressed: _addItem,
+                    child: Text('Add'),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 }
