@@ -97,7 +97,7 @@ class _MyAppState extends State<ListingsBScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Image.asset(
-                'assets/Login_Logo.png',
+                'assets/Logos/YellowLogo.png',
                 fit: BoxFit.contain,
                 height: 32,
               ),
